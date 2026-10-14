@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Login | Gudlar</title>
+<link rel="icon" href="{{ url_for('static', filename='images/favicon.svg') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+<div class="container">
+  <div class="form-card">
+    <div class="brand" style="margin-bottom:18px;">
+      <span class="word">Gudlar</span>
+      <span class="tag">Farm to Home</span>
+    </div>
+    <h2>Admin Login</h2>
+    <p class="sub">Manage your products and stock.</p>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="alert alert-{{ category }}">{{ message }}</div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+
+    <form method="POST">
+      <div class="field">
+        <label for="username">Username</label>
+        <input type="text" id="username" name="username" required autofocus>
+      </div>
+      <div class="field">
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" required>
+      </div>
+      <button type="submit" class="btn btn-primary btn-block">Log In</button>
+    </form>
+    <div class="form-foot">
+      New admin? <a href="{{ url_for('admin.register') }}">Create admin account</a><br>
+      <span style="font-size:.8rem;">Default login: <b>admin</b> / <b>admin123</b> — change after first login.</span><br>
+      <a href="{{ url_for('shop.index') }}">&larr; Back to website</a>
+    </div>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,53 @@
+{% extends "admin/base_admin.html" %}
+{% block title %}Add New Product | Gudlar Admin{% endblock %}
+{% block admin_content %}
+
+<div class="admin-topline">
+  <h1 style="margin:0;">Add New Product</h1>
+  <a href="{{ url_for('admin.products') }}" class="btn btn-outline">&larr; Back to Products</a>
+</div>
+
+<div class="table-wrap" style="padding:30px;">
+  <form method="POST" enctype="multipart/form-data">
+    <div class="admin-form-grid">
+      <div class="field">
+        <label for="name">Product Name</label>
+        <input type="text" id="name" name="name" value="{{ form.name or '' }}" placeholder="e.g. Sri Renuka Cold-Pressed Coconut Oil" required>
+      </div>
+      <div class="field">
+        <label for="category_id">Category</label>
+        <select id="category_id" name="category_id" required>
+          <option value="">Select category</option>
+          {% for c in categories %}
+            <option value="{{ c.id }}" {{ 'selected' if form.category_id|string == c.id|string }}>{{ c.name }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="field">
+        <label for="size_label">Size / Pack</label>
+        <input type="text" id="size_label" name="size_label" value="{{ form.size_label or '' }}" placeholder="e.g. 1 Litre">
+      </div>
+      <div class="field">
+        <label for="price">Price (&#8377;)</label>
+        <input type="number" id="price" name="price" value="{{ form.price or '' }}" step="0.01" min="0" required>
+      </div>
+      <div class="field">
+        <label for="stock">Stock Quantity</label>
+        <input type="number" id="stock" name="stock" value="{{ form.stock or 0 }}" min="0" required>
+        <small>Set to 0 if currently out of stock — the site will show "Out of Stock" automatically.</small>
+      </div>
+      <div class="field">
+        <label for="image">Product Image</label>
+        <input type="file" id="image" name="image" accept=".png,.jpg,.jpeg,.webp">
+        <small>PNG, JPG or WEBP. Leave empty to use the default placeholder bottle.</small>
+      </div>
+    </div>
+    <div class="field">
+      <label for="description">Description</label>
+      <textarea id="description" name="description" rows="4" placeholder="Tell customers what makes this oil special...">{{ form.description or '' }}</textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Launch Product</button>
+  </form>
+</div>
+
+{% endblock %}

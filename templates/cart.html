@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+{% block title %}My Cart | Gudlar{% endblock %}
+{% block content %}
+
+<div class="page-head">
+  <div class="container">
+    <div class="breadcrumb"><a href="{{ url_for('shop.index') }}">Home</a> / Cart</div>
+    <h1>My Cart</h1>
+  </div>
+</div>
+
+<section>
+  <div class="container">
+  {% if items %}
+    <div class="cart-layout">
+      <div>
+        {% for p in items %}
+        <div class="cart-item">
+          <div class="thumb-sm">
+            {% if p.image %}
+              <img src="{{ url_for('static', filename='uploads/products/' + p.image) }}" alt="">
+            {% else %}
+              <img src="{{ url_for('static', filename='images/placeholder-oil.svg') }}" alt="">
+            {% endif %}
+          </div>
+          <div>
+            <h4>{{ p.name }}</h4>
+            <div class="size">{{ p.size_label }} &middot; {{ rupee(p.price) }} each</div>
+            <form action="{{ url_for('shop.cart_remove', product_id=p.id) }}" method="POST">
+              <button type="submit" class="link-btn">Remove</button>
+            </form>
+          </div>
+          <form action="{{ url_for('shop.cart_update', product_id=p.id) }}" method="POST">
+            <div class="qty-box" data-autosubmit="true">
+              <button type="button" data-step="down">&minus;</button>
+              <input type="number" name="quantity" value="{{ p.qty }}" min="1" max="{{ p.stock }}">
+              <button type="button" data-step="up">+</button>
+            </div>
+          </form>
+          <div class="line-total">{{ rupee(p.line_total) }}</div>
+        </div>
+        {% endfor %}
+        <p style="margin-top:20px;"><a href="{{ url_for('shop.products') }}" class="btn btn-outline btn-sm">&larr; Continue Shopping</a></p>
+      </div>
+
+      <div class="summary-card">
+        <h3>Your Order</h3>
+        <div class="summary-row total"><span>Total</span><span>{{ rupee(total) }}</span></div>
+
+        {% if not current_user.is_authenticated or current_user.is_admin %}
+          <p style="color:var(--husk-soft); font-size:.92rem; margin-top:0;">Please log in or create an account to place your order.</p>
+          <a href="{{ url_for('auth.login', next=url_for('shop.cart')) }}" class="btn btn-primary btn-block" style="margin-bottom:10px;">Log In to Order</a>
+          <a href="{{ url_for('auth.register', next=url_for('shop.cart')) }}" class="btn btn-outline btn-block">Create Account</a>
+        {% else %}
+        <form action="{{ url_for('shop.place_order') }}" method="POST">
+          <div class="field">
+            <label for="name">Your Name</label>
+            <input type="text" id="name" name="name" value="{{ form.name or current_user.name }}" required>
+          </div>
+          <div class="field">
+            <label for="phone">Phone Number</label>
+            <input type="tel" id="phone" name="phone" value="{{ form.phone or current_user.phone }}" data-phone
+                   pattern="[6-9][0-9]{9}" maxlength="10" inputmode="numeric"
+                   title="Enter a 10-digit mobile number" placeholder="10-digit mobile number" required>
+            <small>Only 10 digits allowed.</small>
+          </div>
+          <div class="field">
+            <label for="address">Delivery Address</label>
+            <textarea id="address" name="address" rows="3" required>{{ form.address or '' }}</textarea>
+          </div>
+          <div class="field">
+            <label for="note">Note (optional)</label>
+            <input type="text" id="note" name="note" value="{{ form.note or '' }}">
+          </div>
+          <button type="submit" class="btn btn-whatsapp btn-block">Order on WhatsApp</button>
+          <p style="font-size:.8rem; color:var(--husk-soft); margin:12px 0 0;">No online payment. This opens WhatsApp with your order ready to send — we'll confirm availability and delivery with you.</p>
+        </form>
+        {% endif %}
+      </div>
+    </div>
+  {% else %}
+    <div class="empty-state">
+      <h2>Your cart is empty</h2>
+      <p>Add some pure, farm-fresh oil to get started.</p>
+      <a href="{{ url_for('shop.products') }}" class="btn btn-primary" style="margin-top:20px;">Browse Oils</a>
+    </div>
+  {% endif %}
+  </div>
+</section>
+
+{% endblock %}

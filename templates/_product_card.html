@@ -1,0 +1,39 @@
+<div class="product-card">
+  <a href="{{ url_for('shop.product_detail', product_id=p.id) }}" class="card-link">
+    <div class="thumb">
+      <span class="badge-pure">Pure &amp; Natural</span>
+      {% if p.image %}
+        <img src="{{ url_for('static', filename='uploads/products/' + p.image) }}" alt="{{ p.name }}">
+      {% else %}
+        <img src="{{ url_for('static', filename='images/placeholder-oil.svg') }}" alt="{{ p.name }}">
+      {% endif %}
+    </div>
+  </a>
+  <div class="body">
+    <div class="cat">{{ p.category_name }}</div>
+    <a href="{{ url_for('shop.product_detail', product_id=p.id) }}" class="card-link">
+      <h4>{{ p.name }}</h4>
+    </a>
+    <div class="size">{{ p.size_label }}</div>
+
+    {% if p.stock == 0 %}
+      <span class="stock-pill out"><span class="dot"></span> Out of Stock</span>
+    {% elif p.stock <= 10 %}
+      <span class="stock-pill low"><span class="dot"></span> Only {{ p.stock }} left</span>
+    {% else %}
+      <span class="stock-pill in"><span class="dot"></span> In Stock</span>
+    {% endif %}
+
+    <div class="price-row">
+      <span class="price">{{ rupee(p.price) }}</span>
+      {% if p.stock > 0 %}
+      <form action="{{ url_for('shop.cart_add', product_id=p.id) }}" method="POST">
+        <input type="hidden" name="quantity" value="1">
+        <button type="submit" class="btn btn-primary btn-sm">Add to Cart</button>
+      </form>
+      {% else %}
+      <a href="{{ url_for('shop.product_detail', product_id=p.id) }}" class="btn btn-outline btn-sm">View</a>
+      {% endif %}
+    </div>
+  </div>
+</div>

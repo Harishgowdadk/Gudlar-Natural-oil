@@ -1,0 +1,63 @@
+{% extends "admin/base_admin.html" %}
+{% block title %}Edit Product | Gudlar Admin{% endblock %}
+{% block admin_content %}
+
+<div class="admin-topline">
+  <h1 style="margin:0;">Edit Product</h1>
+  <a href="{{ url_for('admin.products') }}" class="btn btn-outline">&larr; Back to Products</a>
+</div>
+
+<div class="table-wrap" style="padding:30px;">
+  <form method="POST" enctype="multipart/form-data">
+    <div class="admin-form-grid">
+      <div class="field">
+        <label for="name">Product Name</label>
+        <input type="text" id="name" name="name" value="{{ product.name }}" required>
+      </div>
+      <div class="field">
+        <label for="category_id">Category</label>
+        <select id="category_id" name="category_id" required>
+          {% for c in categories %}
+            <option value="{{ c.id }}" {{ 'selected' if product.category_id == c.id }}>{{ c.name }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="field">
+        <label for="size_label">Size / Pack</label>
+        <input type="text" id="size_label" name="size_label" value="{{ product.size_label }}">
+      </div>
+      <div class="field">
+        <label for="price">Price (&#8377;)</label>
+        <input type="number" id="price" name="price" value="{{ product.price }}" step="0.01" min="0" required>
+      </div>
+      <div class="field">
+        <label for="stock">Stock Quantity</label>
+        <input type="number" id="stock" name="stock" value="{{ product.stock }}" min="0" required>
+        <small>Set to 0 if currently out of stock.</small>
+      </div>
+      <div class="field">
+        <label>Current Image</label>
+        <div class="current-image">
+          {% if product.image %}
+            <img src="{{ url_for('static', filename='uploads/products/' + product.image) }}" alt="">
+          {% else %}
+            <img src="{{ url_for('static', filename='images/placeholder-oil.svg') }}" alt="">
+          {% endif %}
+        </div>
+        <input type="file" id="image" name="image" accept=".png,.jpg,.jpeg,.webp">
+        <small>Upload a new photo to replace it, or leave empty to keep the current one.</small>
+      </div>
+    </div>
+    <div class="field">
+      <label for="description">Description</label>
+      <textarea id="description" name="description" rows="4">{{ product.description }}</textarea>
+    </div>
+    <div class="checkbox-field">
+      <input type="checkbox" id="is_active" name="is_active" {{ 'checked' if product.is_active }}>
+      <label for="is_active" style="margin:0;">Visible on website</label>
+    </div>
+    <button type="submit" class="btn btn-primary">Save Changes</button>
+  </form>
+</div>
+
+{% endblock %}

@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}Sri Renuka Oil's — Shop | Gudlar{% endblock %}
+{% block content %}
+
+<div class="page-head">
+  <div class="container">
+    <div class="breadcrumb"><a href="{{ url_for('shop.index') }}">Home</a> / Sri Renuka Oil's</div>
+    <h1>Sri Renuka Oil's</h1>
+    <p>Pure, chemical-free oils — check what's in stock right now.</p>
+  </div>
+</div>
+
+<section>
+  <div class="container">
+    <div class="filter-row">
+      <a href="{{ url_for('shop.products') }}" class="filter-chip {{ 'active' if not active_slug }}">All Oils</a>
+      {% for c in categories %}
+        <a href="{{ url_for('shop.products', category=c.slug) }}" class="filter-chip {{ 'active' if active_slug == c.slug }}">{{ c.name }}</a>
+      {% endfor %}
+    </div>
+
+    {% if items %}
+      <div class="product-grid">
+        {% for p in items %}
+          {% include "_product_card.html" %}
+        {% endfor %}
+      </div>
+    {% else %}
+      <div class="empty-state">
+        <h2>No products here yet</h2>
+        <p>Please check back soon — we're always pressing something new.</p>
+      </div>
+    {% endif %}
+  </div>
+</section>
+
+{% endblock %}

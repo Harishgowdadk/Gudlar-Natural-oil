@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+{% block content %}
+
+<section class="hero">
+  <div class="container hero-inner">
+    <div>
+      <p class="eyebrow">Gudlar &middot; Sri Renuka Oil's</p>
+      <h1>Pure oil, pressed <em>the old way</em>, from our farm to your home.</h1>
+      <p class="lede">No chemicals, no refining, no shortcuts. Just coconuts and groundnuts, cold &amp; wood pressed the traditional way — check what's fresh and in stock right now.</p>
+      <div class="cta-row">
+        <a href="{{ url_for('shop.products') }}" class="btn btn-primary">Browse Our Oils</a>
+        <a href="{{ url_for('shop.cart') }}" class="btn btn-outline">View Cart</a>
+      </div>
+      <div class="trust-strip">
+        <div class="item"><span class="dot"></span> 100% Chemical-Free</div>
+        <div class="item"><span class="dot"></span> Cold &amp; Wood Pressed</div>
+        <div class="item"><span class="dot"></span> Farm to Home</div>
+      </div>
+    </div>
+    <div class="hero-art">
+      <img src="{{ url_for('static', filename='images/placeholder-oil.svg') }}" alt="Sri Renuka Oil's bottle" style="width:260px;">
+      <img src="{{ url_for('static', filename='images/stamp.svg') }}" alt="Farm to Home seal" class="stamp">
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="section-head">
+      <p class="eyebrow">Our Range</p>
+      <h2>Sri Renuka Oil's</h2>
+      <p>Two oils, one promise — nothing added, nothing taken away.</p>
+    </div>
+    <div class="category-grid">
+      <a href="{{ url_for('shop.products', category='coconut-oil') }}" class="category-card coconut">
+        <svg class="cat-icon" viewBox="0 0 48 48" fill="none" stroke="#FBF3E7" stroke-width="1.6"><circle cx="24" cy="26" r="16"/><path d="M24 10c3 4 5 7 5 10"/></svg>
+        <h3>Coconut Oil</h3>
+        <p>Cold-pressed from farm-fresh coconuts, 500ml to 5L.</p>
+        <span class="go">Shop Coconut Oil &rarr;</span>
+      </a>
+      <a href="{{ url_for('shop.products', category='groundnut-oil') }}" class="category-card groundnut">
+        <svg class="cat-icon" viewBox="0 0 48 48" fill="none" stroke="#FBF3E7" stroke-width="1.6"><ellipse cx="24" cy="24" rx="10" ry="16"/><path d="M24 14v20"/></svg>
+        <h3>Groundnut Oil</h3>
+        <p>Slow wood-pressed groundnut oil with natural aroma.</p>
+        <span class="go">Shop Groundnut Oil &rarr;</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="section-head">
+      <p class="eyebrow">Available Now</p>
+      <h2>Featured Oils</h2>
+      <p>Here's what's currently pressed and ready.</p>
+    </div>
+    <div class="product-grid">
+      {% for p in featured %}
+        {% include "_product_card.html" %}
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="story" id="story">
+  <div class="container">
+    <div>
+      <p class="eyebrow" style="color:#C88B2C;">Our Story</p>
+      <h2>Farm to Home, truly.</h2>
+      <p>Gudlar started with one promise: oil the way our grandparents made it. Every bottle of Sri Renuka Oil's is pressed from produce grown on our own farm — no middlemen, no refining, no chemicals.</p>
+      <div class="steps">
+        <div class="step">
+          <span class="num">1</span>
+          <div><h4>Grown on our farm</h4><p>Coconuts and groundnuts harvested at peak freshness.</p></div>
+        </div>
+        <div class="step">
+          <span class="num">2</span>
+          <div><h4>Cold &amp; wood pressed</h4><p>No heat, no solvents — just slow, traditional pressing.</p></div>
+        </div>
+        <div class="step">
+          <span class="num">3</span>
+          <div><h4>Straight to your home</h4><p>Bottled fresh and sent directly to you.</p></div>
+        </div>
+      </div>
+    </div>
+    <div class="story-art">
+      <img src="{{ url_for('static', filename='images/stamp.svg') }}" alt="Farm to Home seal" style="width:220px;">
+    </div>
+  </div>
+</section>
+
+<section class="contact-strip">
+  <div class="container">
+    <div>
+      <h3>Want to know what's in stock?</h3>
+      <p>Add oils to your cart and send your order straight to us on WhatsApp.</p>
+    </div>
+    <a href="https://wa.me/{{ wa_number }}" class="btn btn-primary" target="_blank" rel="noopener">Chat on WhatsApp</a>
+  </div>
+</section>
+
+{% endblock %}

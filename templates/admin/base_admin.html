@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{% block title %}Admin | Gudlar{% endblock %}</title>
+<link rel="icon" href="{{ url_for('static', filename='images/favicon.svg') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+<div class="admin-shell">
+  <aside class="admin-side">
+    <div class="brand"><span class="word">Gudlar</span></div>
+    <nav>
+      <a href="{{ url_for('admin.dashboard') }}" class="{{ 'active' if request.endpoint == 'admin.dashboard' }}">Dashboard</a>
+      <a href="{{ url_for('admin.products') }}" class="{{ 'active' if request.endpoint in ['admin.products','admin.edit_product'] }}">Products</a>
+      <a href="{{ url_for('admin.add_product') }}" class="{{ 'active' if request.endpoint == 'admin.add_product' }}">+ Add New Product</a>
+      <a href="{{ url_for('shop.index') }}" target="_blank" rel="noopener">View Website &#8599;</a>
+      <a href="{{ url_for('admin.logout') }}">Logout</a>
+    </nav>
+  </aside>
+  <main class="admin-main">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="alert alert-{{ category }}">{{ message }}</div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+    {% block admin_content %}{% endblock %}
+  </main>
+</div>
+</body>
+</html>

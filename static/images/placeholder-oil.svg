@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 260" width="200" height="260">
+  <ellipse cx="100" cy="248" rx="52" ry="8" fill="#2E2016" opacity="0.08"/>
+  <rect x="70" y="30" width="24" height="26" rx="4" fill="#445D3E"/>
+  <rect x="64" y="18" width="36" height="16" rx="6" fill="#303F2C"/>
+  <path d="M52 66 C52 50 62 46 100 46 C138 46 148 50 148 66 L152 220 C152 236 140 246 122 246 L78 246 C60 246 48 236 48 220 Z" fill="#FBF3E7" stroke="#445D3E" stroke-width="3"/>
+  <path d="M52 66 C52 50 62 46 100 46 C138 46 148 50 148 66 L150 150 L50 150 Z" fill="#C88B2C" opacity="0.85"/>
+  <rect x="58" y="150" width="84" height="66" rx="4" fill="#FFFFFF" stroke="#A15C38" stroke-width="1.5"/>
+  <text x="100" y="176" font-family="Georgia, serif" font-size="15" text-anchor="middle" fill="#2E2016" font-weight="700">Sri Renuka</text>
+  <text x="100" y="196" font-family="Georgia, serif" font-size="11" text-anchor="middle" fill="#A15C38" letter-spacing="1">OIL'S</text>
+  <path d="M92 202 q8 10 16 0" stroke="#445D3E" stroke-width="2" fill="none"/>
+</svg>
