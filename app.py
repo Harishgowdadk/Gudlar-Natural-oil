@@ -46,14 +46,12 @@ def inject_globals():
         "wa_display": ("+" + wa[:2] + " " + wa[2:7] + " " + wa[7:]) if len(wa) == 12 else ("+" + wa),
     }
 
-
 with app.app_context():
     try:
         ensure_users_table()
         ensure_default_admin()
     except Exception as exc:  # pragma: no cover
         print("Could not create default admin (is MySQL running in XAMPP?):", exc)
-
 
 if __name__ == "__main__":
     app.run(debug=True, port=5000)
